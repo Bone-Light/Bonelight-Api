@@ -1,0 +1,64 @@
+# 开发环境配置
+server:
+  port: 8081
+
+springdoc:
+  paths-to-match: /api/**
+  swagger-ui:
+    operations-sorter: alpha
+#    enabled: false
+
+spring:
+  influxdb:
+    url: http://121.43.233.234:8086
+    username: "oilbone"  # 或使用 Token 认证
+    password: "123123123"
+    org: "oilbone_class"
+    bucket: "Demo"
+  mail:
+    host: smtp.126.com
+    username: oilbone@126.com
+    password: GLhCjNzgzQXareYv
+
+  rabbitmq:
+    addresses: 121.43.233.234
+    username: oilbone
+    password: 123123123
+    virtual-host: /test
+    listener:
+      simple:
+        acknowledge-mode: auto  # 改为自动确认
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/monitor
+    username: root
+    password: 123123
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  security:
+    jwt:
+      key: 'abcdefghijklmn'
+      expire: 72
+      limit:
+        base: 9
+        upgrade: 280
+        frequency: 30
+    filter:
+      order: -100
+  web:
+    verify:
+      mail-limit: 60
+    flow:
+      period: 5
+      limit: 100
+      block: 30
+    cors:
+      origin: '*'
+      credentials: false
+      methods: '*'
+  data:
+    redis:
+      port: 6379
+      host: 121.43.233.234
+      database: 0
+      password: 123123123
