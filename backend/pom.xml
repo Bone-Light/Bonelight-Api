@@ -77,6 +77,12 @@
             <artifactId>mybatis-plus-boot-starter</artifactId>
             <version>3.5.9</version>
         </dependency>
+        <!--    Mybatis-Plus 分页插件    -->
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-jsqlparser</artifactId>
+            <version>3.5.9</version>
+        </dependency>
         <!--    MySQL驱动    -->
         <dependency>
             <groupId>com.mysql</groupId>

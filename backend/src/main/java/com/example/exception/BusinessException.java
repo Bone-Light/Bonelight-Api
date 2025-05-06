@@ -1,5 +1,10 @@
 package com.example.exception;
-// todo: 这个业务错误
+
+import com.example.common.ErrorCode;
+import lombok.Getter;
+
+// 业务错误类
+@Getter
 public class BusinessException extends RuntimeException {
     private final int code;
 
@@ -18,7 +23,4 @@ public class BusinessException extends RuntimeException {
         this.code = errorCode.getCode();
     }
 
-    public int getCode() {
-        return code;
-    }
 }
