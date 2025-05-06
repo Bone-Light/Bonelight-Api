@@ -8,5 +8,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
 * @since 2025-05-06 19:40:48
 */
 public interface AccountService extends IService<Account> {
-
+    Account findAccountByNameOrEmail(String username);
 }

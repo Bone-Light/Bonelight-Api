@@ -14,6 +14,12 @@ import org.springframework.stereotype.Service;
 public class AccountImpl extends ServiceImpl<AccountMapper, Account>
     implements AccountService{
 
+    @Override
+    public Account findAccountByNameOrEmail(String username) {
+        return this.query()
+                .eq("username", username) .or() .eq("email", username)
+                .one();
+    }
 }
 
 

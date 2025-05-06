@@ -9,30 +9,24 @@ springdoc:
 #    enabled: false
 
 spring:
-  influxdb:
-    url: http://121.43.233.234:8086
-    username: "oilbone"  # 或使用 Token 认证
-    password: "123123123"
-    org: "oilbone_class"
-    bucket: "Demo"
   mail:
     host: smtp.126.com
     username: oilbone@126.com
     password: GLhCjNzgzQXareYv
 
-  rabbitmq:
-    addresses: 121.43.233.234
-    username: oilbone
-    password: 123123123
-    virtual-host: /test
-    listener:
-      simple:
-        acknowledge-mode: auto  # 改为自动确认
+#  rabbitmq:
+#    addresses: 121.43.233.234
+#    username: oilbone
+#    password: 123123123
+#    virtual-host: /test
+#    listener:
+#      simple:
+#        acknowledge-mode: auto  # 改为自动确认
 
   datasource:
-    url: jdbc:mysql://localhost:3306/monitor
+    url: jdbc:mysql://43.139.163.68:3306/monitor
     username: root
-    password: 123123
+    password: oil123123
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   security:
@@ -45,6 +39,7 @@ spring:
         frequency: 30
     filter:
       order: -100
+
   web:
     verify:
       mail-limit: 60
@@ -56,9 +51,10 @@ spring:
       origin: '*'
       credentials: false
       methods: '*'
+
   data:
     redis:
       port: 6379
-      host: 121.43.233.234
+      host: 43.139.163.68
       database: 0
-      password: 123123123
+      password: oil123123
