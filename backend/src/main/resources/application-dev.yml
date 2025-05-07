@@ -3,10 +3,22 @@ server:
   port: 8081
 
 springdoc:
-  paths-to-match: /api/**
+  api-docs:
+    enabled: true  # 启用OpenAPI文档生成
+    path: /v3/api-docs  # 文档接口路径
   swagger-ui:
-    operations-sorter: alpha
-#    enabled: false
+    path: /swagger-ui.html  # 原生UI路径
+    tags-sorter: alpha  # 标签按字母排序
+    operations-sorter: alpha  # 接口按字母排序
+
+knife4j:
+  enable: true  # 开启增强功能
+  setting:
+    language: zh-CN  # 中文界面
+  basic:
+    enable: true  # 开启Basic认证（可选）
+    username: oilbone
+    password: 123123
 
 spring:
   mail:
