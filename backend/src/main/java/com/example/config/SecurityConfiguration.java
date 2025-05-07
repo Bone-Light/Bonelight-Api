@@ -65,11 +65,6 @@ public class SecurityConfiguration {
                 .build();
     }
 
-    @Bean
-    public BCryptPasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
     private void handleProcess(HttpServletRequest request, HttpServletResponse response, Object exceptionOrAuthentication) throws IOException {
         response.setContentType("application/json;charset=UTF-8");
         PrintWriter writer = response.getWriter();

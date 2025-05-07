@@ -1,6 +1,10 @@
 package com.example.DAO.entity;
 
 import java.time.LocalDateTime;
+
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -11,6 +15,7 @@ import lombok.Data;
 @NoArgsConstructor
 public class Account {
     //Account-ID
+    @TableId(type = IdType.AUTO)
     private Long id;
     //用户名
     private String userName;
@@ -23,7 +28,7 @@ public class Account {
     //用户角色 user/admin
     private String userRole;
     //密码
-    private String userPassword;
+    private String password;
     //accessKey
     private String accessKey;
     //secretKey

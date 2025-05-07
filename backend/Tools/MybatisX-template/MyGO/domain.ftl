@@ -12,6 +12,12 @@ import lombok.Data;
 public class ${tableClass.shortClassName} {
 <#list tableClass.allFields as field>
     //${field.remark!}
+    <#-- 判断字段是否为主键 -->
+    <#if field.isPrimaryKey>
+    @TableId(type = IdType.AUTO<#if field.columnName != "id">, value = "${field.columnName}"</#if>)
+    <#else>
+    @TableField("${field.columnName}") <#-- 非主键字段建议添加 @TableField -->
+    </#if>
     private ${field.shortTypeName} ${field.fieldName};
 </#list>
 }

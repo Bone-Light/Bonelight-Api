@@ -2,6 +2,9 @@ package com.example.DAO.entity;
 
 
 import java.time.LocalDateTime;
+
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -12,6 +15,7 @@ import lombok.Data;
 @NoArgsConstructor
 public class ApiList {
     //API-ID
+    @TableId(type = IdType.AUTO)
     private Integer id;
     //接口名
     private String apiName;

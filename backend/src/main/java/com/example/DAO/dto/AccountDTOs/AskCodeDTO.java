@@ -1,4 +1,4 @@
-package com.example.DAO.dto;
+package com.example.DAO.dto.AccountDTOs;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
