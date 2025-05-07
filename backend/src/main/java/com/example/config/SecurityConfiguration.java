@@ -85,7 +85,7 @@ public class SecurityConfiguration {
             LoginVO vo = new LoginVO();
             BeanUtils.copyProperties(vo,account);
             writer.write(RestBean.success(vo).asJsonString());
-        }
+        } // 密码校验是隐式的, 实现 BCryptPasswordEncoder 就好
     }
 
     private void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {

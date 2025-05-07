@@ -9,7 +9,7 @@ import lombok.Data;
 @NotNull
 public class AskCodeDTO {
     @Email
-    String code;
+    String email;
     @Pattern(regexp = "reset | register")
     String type;
 }

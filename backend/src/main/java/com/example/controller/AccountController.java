@@ -1,5 +1,6 @@
 package com.example.controller;
 
+import com.example.DAO.dto.AccountRegisterDTO;
 import com.example.DAO.dto.AskCodeDTO;
 import com.example.DAO.entity.Account;
 import com.example.DAO.service.AccountService;
@@ -19,16 +20,15 @@ public class AccountController {
 
     // todo
     @PostMapping("/register")
-    public RestBean<Void> registerAccount(@RequestBody @Valid  XxxDto req) {
-
+    public RestBean<Void> registerAccount(@RequestBody @Valid AccountRegisterDTO accountRegisterDTO) {
+        accountService.registerByEmail(accountRegisterDTO);
         return RestBean.success();
     }
 
-    // todo
     @PostMapping("/ask-code")
     public RestBean<String> askCode(@RequestBody @Valid @NotNull AskCodeDTO askCodeDTO, HttpServletRequest request) {
-        String code = accountService.getCode(askCodeDTO,request.getLocalAddr());
-        return RestBean.success(code);
+        accountService.getCode(askCodeDTO,request.getLocalAddr());
+        return RestBean.success();
     }
 
     // todo
