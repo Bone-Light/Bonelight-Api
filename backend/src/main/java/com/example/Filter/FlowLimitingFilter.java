@@ -1,4 +1,4 @@
-package com.example.filter;
+package com.example.Filter;
 
 import com.example.common.RestBean;
 import com.example.utils.FlowUtil;
@@ -44,7 +44,7 @@ public class FlowLimitingFilter extends HttpFilter {
 
     private boolean tryCount(String address){
         synchronized (address.intern()){
-            if(Boolean.TRUE.equals(stringRedisTemplate.hasKey(Const.FLOW_LIMIT_BLOCK)))
+            if(stringRedisTemplate.hasKey(Const.FLOW_LIMIT_BLOCK))
                 return false;
             String counterKey = Const.FLOW_LIMIT_COUNTER + address;
             String blockKey = Const.FLOW_LIMIT_BLOCK + address;

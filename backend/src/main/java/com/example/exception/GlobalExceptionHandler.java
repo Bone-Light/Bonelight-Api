@@ -21,7 +21,7 @@ public class GlobalExceptionHandler {
         return RestBean.failure(e.getCode(), e.getMessage());
     }
 
-    @ExceptionHandler(BusinessException.class)
+    @ExceptionHandler(RuntimeException.class)
     public RestBean<?> runtimeExceptionHandler(RuntimeException e){
         log.warn("runtimeException [{}:{}]", e.getClass().getName(), e.getMessage());
         return RestBean.failure(500, "服务器内部异常，请联系管理员");

@@ -5,6 +5,9 @@ import com.example.DAO.dto.AskCodeDTO;
 import com.example.DAO.entity.Account;
 import com.example.DAO.service.AccountService;
 import com.example.DAO.mapper.AccountMapper;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 /**
@@ -24,6 +27,19 @@ public class AccountImpl extends ServiceImpl<AccountMapper, Account>
         return this.query()
                 .eq("username", username) .or() .eq("email", username)
                 .one();
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        Account account = this.findAccountByNameOrEmail(username);
+        if(account == null){
+            throw new UsernameNotFoundException("用户名或密码错误");
+        }
+        return User
+                .withUsername(username)
+                .password(account.getUserPassword())
+                .roles(account.getUserRole())
+                .build();
     }
 }
 

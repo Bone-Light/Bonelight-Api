@@ -26,29 +26,22 @@ spring:
     username: oilbone@126.com
     password: GLhCjNzgzQXareYv
 
-#  rabbitmq:
-#    addresses: 121.43.233.234
-#    username: oilbone
-#    password: 123123123
-#    virtual-host: /test
-#    listener:
-#      simple:
-#        acknowledge-mode: auto  # 改为自动确认
+  rabbitmq:
+    addresses: 121.43.233.234
+    username: oilbone
+    password: 123123123
+    virtual-host: /test
+    listener:
+      simple:
+        acknowledge-mode: auto  # 改为自动确认
 
   datasource:
-    url: jdbc:mysql://43.139.163.68:3306/monitor
+    url: jdbc:mysql://43.139.163.68:3306/Api_project
     username: root
     password: oil123123
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   security:
-    jwt:
-      key: 'abcdefghijklmn'
-      expire: 72
-      limit:
-        base: 9
-        upgrade: 280
-        frequency: 30
     filter:
       order: -100
 
