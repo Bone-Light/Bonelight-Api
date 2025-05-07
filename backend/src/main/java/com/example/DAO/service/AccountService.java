@@ -1,5 +1,6 @@
 package com.example.DAO.service;
 
+import com.example.DAO.dto.AskCodeDTO;
 import com.example.DAO.entity.Account;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -9,4 +10,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
 */
 public interface AccountService extends IService<Account> {
     Account findAccountByNameOrEmail(String username);
+    String getCode(AskCodeDTO askCodeDTO, String ip);
 }

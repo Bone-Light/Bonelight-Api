@@ -1,6 +1,7 @@
 package com.example.DAO.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.example.DAO.dto.AskCodeDTO;
 import com.example.DAO.entity.Account;
 import com.example.DAO.service.AccountService;
 import com.example.DAO.mapper.AccountMapper;
@@ -13,6 +14,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class AccountImpl extends ServiceImpl<AccountMapper, Account>
     implements AccountService{
+    @Override
+    public String getCode(AskCodeDTO askCodeDTO, String ip) {
+
+    }
 
     @Override
     public Account findAccountByNameOrEmail(String username) {

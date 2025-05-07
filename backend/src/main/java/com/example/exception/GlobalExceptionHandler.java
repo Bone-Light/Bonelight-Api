@@ -1,7 +1,5 @@
 package com.example.exception;
 
-import ch.qos.logback.core.spi.ErrorCodes;
-import com.example.common.ErrorCode;
 import com.example.common.RestBean;
 import jakarta.xml.bind.ValidationException;
 import lombok.extern.slf4j.Slf4j;
@@ -12,9 +10,9 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
     @ExceptionHandler(ValidationException.class)
-    public RestBean<Void> validateExceptionHandler(ValidationException exception){
-        log.warn("validateException [{}:{}]", exception.getClass().getName(), exception.getMessage());
-        return RestBean.failure(400, "请求参数有误");
+    public RestBean<Void> validateExceptionHandler(ValidationException e){
+        log.warn("validateException [{}:{}]", e.getClass().getName(), e.getMessage());
+        return RestBean.failure(400, e.getMessage());
     }
 
     @ExceptionHandler(BusinessException.class)
@@ -26,6 +24,6 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(BusinessException.class)
     public RestBean<?> runtimeExceptionHandler(RuntimeException e){
         log.warn("runtimeException [{}:{}]", e.getClass().getName(), e.getMessage());
-        return RestBean.failure(500, e.getMessage());
+        return RestBean.failure(500, "服务器内部异常，请联系管理员");
     }
 }
