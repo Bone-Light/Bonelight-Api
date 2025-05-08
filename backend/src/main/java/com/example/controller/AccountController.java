@@ -9,8 +9,10 @@ import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+@Validated
 @RestController
 @RequestMapping("/api/auth")
 public class AccountController {
@@ -18,18 +20,17 @@ public class AccountController {
     private AccountService accountService;
 
     @PostMapping("/register")
-    public RestBean<Void> registerAccount(@RequestBody @Valid AccountRegisterDTO accountRegisterDTO) {
+    public RestBean<Void> registerAccount(@RequestBody @Valid @NotNull AccountRegisterDTO accountRegisterDTO) {
         accountService.registerByEmail(accountRegisterDTO);
         return RestBean.success();
     }
 
-    @PostMapping("/get-code")
-    public RestBean<String> getCode(@RequestBody @Valid @NotNull AskCodeDTO askCodeDTO, HttpServletRequest request) {
+    @GetMapping("/get-code")
+    public RestBean<String> getCode(@Valid AskCodeDTO askCodeDTO, HttpServletRequest request) {
         accountService.getCode(askCodeDTO,request.getLocalAddr());
         return RestBean.success();
     }
 
-    // todo
     @PostMapping("/reset-password")
     public RestBean<Void> resetPassword(@RequestBody @NotNull AccountResetPwdDTO accountResetPwdDTO) {
         accountService.resetPassword(accountResetPwdDTO);

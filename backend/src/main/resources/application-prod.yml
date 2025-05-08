@@ -1,6 +1,7 @@
 #生产环境配置
 server:
   port: 8081
+
 springdoc:
   api-docs:
     enabled: false

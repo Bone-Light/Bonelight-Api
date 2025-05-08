@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="x-apple-disable-message-reformatting">
+        <title>BoneLight-Api｜您的专属会员服务</title>
+        <style>
+            /* 客户端重置 */
+            body, p, h1, h2 { margin: 0; padding: 0; }
+            img { border: 0; -ms-interpolation-mode: bicubic; display: block; }
+            a { text-decoration: none; }
+
+            /* 响应式布局 */
+            @media only screen and (max-width: 600px) {
+                .container { width: 100% !important; }
+                .card { border-radius: 0 !important; }
+            }
+
+            /* 主样式 */
+            body {
+                background-color: #f7f9fc;
+                font-family: 'Helvetica Neue', Arial, sans-serif;
+                line-height: 1.6;
+                color: #4a5568;
+            }
+            .container {
+                max-width: 600px;
+                margin: 0 auto;
+                padding: 20px;
+            }
+            .header {
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                padding: 40px 20px;
+                text-align: center;
+                border-radius: 8px 8px 0 0;
+            }
+            .header h1 {
+                color: white;
+                font-size: 28px;
+                font-weight: 600;
+                margin: 0;
+                letter-spacing: 1px;
+            }
+            .logo {
+                height: 40px;
+                margin-bottom: 15px;
+            }
+            .card {
+                background: white;
+                padding: 30px;
+                border-radius: 0 0 8px 8px;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            }
+            .welcome-text {
+                font-size: 16px;
+                margin-bottom: 25px;
+                color: #4a5568;
+            }
+            .code-container {
+                background: #f8f5ff;
+                border-left: 4px solid #667eea;
+                padding: 20px;
+                margin: 25px 0;
+                text-align: center;
+            }
+            .verification-code {
+                font-size: 32px;
+                font-weight: 700;
+                letter-spacing: 3px;
+                color: #553c9a;
+            }
+            .button {
+                display: inline-block;
+                padding: 14px 28px;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                color: white !important;
+                border-radius: 50px;
+                font-weight: 600;
+                text-align: center;
+                margin: 20px 0;
+            }
+            .footer {
+                text-align: center;
+                padding: 20px 0;
+                color: #a0aec0;
+                font-size: 12px;
+            }
+            .social-icons {
+                margin: 20px 0;
+            }
+            .social-icon {
+                display: inline-block;
+                margin: 0 8px;
+            }
+        </style>
+    </head>
+    <body>
+        <div style="text-align: center; width: 100%;">
+            <table style="background-color: #f7f9fc; text-align: center; width: 100%;">
+                <tr>
+                    <td>
+                        <!-- 主卡片容器 -->
+                        <table class="container">
+                            <!-- 页眉 -->
+                            <tr>
+                                <td class="header">
+                                    <!-- Logo（Base64 嵌入或外链） -->
+                                    <img class="logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiB2aWV3Qm94PSIwIDAgMjQgMjQiIGZpbGw9IndoaXRlIj48cGF0aCBkPSJNMTIgMkM2LjQ4IDIgMiA2LjQ4IDIgMTJzNC40OCAxMCAxMCAxMCAxMC00LjQ4IDEwLTEwUzE3LjUyIDIgMTIgMnptLTEgMTVoMnYyaC0ydi0yem0wLTEzaDJ2MTBoLTJWNnoiLz48L3N2Zz4=" alt="封灯云 Logo">
+                                    <h1>欢迎加入封灯云</h1>
+                                </td>
+                            </tr>
+
+                            <!-- 正文卡片 -->
+                            <tr>
+                                <td class="card">
+                                    <p class="welcome-text">
+                                        尊敬的 <strong th:text="${username}">用户</strong>，您好！<br>
+                                        感谢您使用我们的 Api 服务，以下是您的相关信息
+                                    </p>
+
+                                    <!-- 验证码卡片 -->
+                                    <div class="code-container">
+                                        <p style="margin: 0 0 10px; color: #718096;">您的验证码：</p>
+                                        <div class="verification-code" th:text="${code}">-v x v-</div>
+                                        <p style="margin: 10px 0 0; font-size: 12px; color: #a0aec0;">（有效期 10 分钟）</p>
+                                    </div>
+
+                                    <!-- 主按钮 -->
+                                    <div style="text-align: center;">
+                                        <a href="https://example.com/dashboard" class="button">立即登录控制台</a>
+                                    </div>
+
+                                    <p style="color: #718096;">
+                                        如果您未进行此操作，请忽略此邮件或联系我们的
+                                        <a href="https://example.com/support" style="color: #667eea;">支持团队</a>。
+                                    </p>
+                                </td>
+                            </tr>
+
+                            <!-- 页脚 -->
+                            <tr>
+                                <td class="footer">
+                                    <!-- 社交图标 -->
+                                    <div class="social-icons">
+                                        <a href="https://twitter.com" class="social-icon">
+                                            <img src="https://via.placeholder.com/24/667eea/ffffff?text=Tw" width="24" alt="Twitter">
+                                        </a>
+                                        <a href="https://facebook.com" class="social-icon">
+                                            <img src="https://via.placeholder.com/24/667eea/ffffff?text=Fb" width="24" alt="Facebook">
+                                        </a>
+                                        <a href="https://linkedin.com" class="social-icon">
+                                            <img src="https://via.placeholder.com/24/667eea/ffffff?text=In" width="24" alt="LinkedIn">
+                                        </a>
+                                    </div>
+                                    <p>
+                                        © 2023 封灯云 | <a href="https://example.com" style="color: #667eea;">官网</a>
+                                        | <a href="https://example.com/privacy" style="color: #667eea;">隐私政策</a>
+                                    </p>
+                                    <p style="margin-top: 5px;">请勿直接回复此邮件</p>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </body>
+</html>

@@ -11,7 +11,8 @@ public class CorsConfiguration implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")  // 所有路径生效
-                .allowedOrigins("*")
+//                .allowedOrigins("*") // 当allowCredentials=true时，allowedOrigins不能使用通配符"*"
+                .allowedOriginPatterns("*")  // 关键修改点
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                 .allowedHeaders("*")
                 .allowCredentials(true)  // 允许携带凭证（如 Cookie）

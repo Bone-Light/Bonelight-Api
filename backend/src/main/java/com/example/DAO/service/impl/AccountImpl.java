@@ -124,9 +124,14 @@ public class AccountImpl extends ServiceImpl<AccountMapper, Account>
                 .update();
     }
 
+    @Override
+    public Account getAccountByEmail(String email) {
+        return this.query().eq("email", email).one();
+    }
+
     private boolean keyBusy(String key) {
         key = Const.VERIFY_EMAIL_LIMIT + key;
-        return flowUtil.limitOnceCheck(key, busyTime);
+        return !flowUtil.limitOnceCheck(key, busyTime);
     }
 
     private String getCodeFromRedis(String email, String type) {

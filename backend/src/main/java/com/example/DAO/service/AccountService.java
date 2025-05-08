@@ -5,6 +5,7 @@ import com.example.DAO.dto.AccountDTOs.AccountResetPwdDTO;
 import com.example.DAO.dto.AccountDTOs.AskCodeDTO;
 import com.example.DAO.entity.Account;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.example.DAO.mapper.AccountMapper;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 /**
@@ -14,6 +15,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 public interface AccountService extends IService<Account>, UserDetailsService {
     Account findAccountByNameOrEmail(String username);
     void getCode(AskCodeDTO askCodeDTO, String ip);
+    Account getAccountByEmail(String email);
     void registerByEmail(AccountRegisterDTO accountRegisterDTO);
     void resetPassword(AccountResetPwdDTO accountResetPwdDTO);
 }

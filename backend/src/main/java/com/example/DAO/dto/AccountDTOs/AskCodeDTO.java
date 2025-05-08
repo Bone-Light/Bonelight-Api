@@ -10,6 +10,6 @@ import lombok.Data;
 public class AskCodeDTO {
     @Email
     String email;
-    @Pattern(regexp = "reset | register")
+    @Pattern(regexp = "reset|register", message = "类型必须是reset或register")
     String type;
 }

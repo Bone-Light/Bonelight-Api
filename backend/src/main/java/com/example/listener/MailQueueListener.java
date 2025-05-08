@@ -1,5 +1,7 @@
 package com.example.listener;
 
+import com.example.DAO.mapper.AccountMapper;
+import com.example.DAO.service.AccountService;
 import jakarta.annotation.Resource;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
@@ -10,9 +12,11 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @Component
@@ -24,47 +28,44 @@ public class MailQueueListener {
     @Resource
     TemplateEngine templateEngine;
 
+    @Resource
+    AccountService accountService;
+
     @Value("${spring.mail.username}")
     String username;
 
     @RabbitHandler
-    public void sendMailMessage(Map<String, Object> data) {
+    public void sendMailMessage(Map<String, Object> data) throws MessagingException {
         String email = data.get("email").toString();
         Integer code = (Integer) data.get("code");
-        SimpleMailMessage message = switch (data.get("type").toString()) {
-            case "reset" ->
-                    createMessage("封灯云 -- 您的密码重置文件","您好,您正在绑定新的电子邮件地址", email);
-            case "modify" ->
-                    createMessage("您的邮件你修改验证邮件", "您好, 您正在绑定新的电子邮件地址", email);
-            default -> null;
-        };
-        if(message == null) return;
-        mailSender.send(message);
-    }
+        String type = data.get("type").toString();
+        Map<String, Object> valueMap = new HashMap<>(Map.of("username", email, "code", code));
 
-    private SimpleMailMessage createMessage(String title, String content, String email) {
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setSubject(title);
-        message.setText(content);
-        message.setTo(email);
-        message.setFrom(username);
-        return message;
+        switch (type) {
+            case "register" -> sendHtmlEmail(email,"您的注册验证码邮件",
+                    "code-email",valueMap);
+            case "modify" -> {
+                valueMap.put("username", accountService.getAccountByEmail(email).getUserName());
+                sendHtmlEmail(email,"您的修改密码邮件",
+                "code-email",valueMap);
+            }
+        }
     }
 
     private void sendHtmlEmail(String to, String subject, String templateName,
-                              Map<String, Object> variables) throws MessagingException {
+                              Map<String, Object> valueMap) throws MessagingException {
         MimeMessage message = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
 
         // 使用Thymeleaf渲染HTML内容
         Context context = new Context();
-        context.setVariables(variables);
+        context.setVariables(valueMap);
         String htmlContent = templateEngine.process(templateName, context);
 
         helper.setTo(to);
         helper.setSubject(subject);
         helper.setText(htmlContent, true);
-
+        helper.setFrom(username);
         mailSender.send(message);
     }
 }

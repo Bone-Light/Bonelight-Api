@@ -21,16 +21,30 @@ knife4j:
     password: 123123
 
 spring:
+  thymeleaf:
+    prefix: classpath:/static/
+    suffix: .html
+    cache: false
+
   mail:
+    port: 465
     host: smtp.126.com
     username: oilbone@126.com
     password: GLhCjNzgzQXareYv
+    time: 3
+    protocol: smtps
+    properties:
+      mail:
+        smtp:
+          ssl:
+            enable: true
+          auth: true
 
   rabbitmq:
-    addresses: 121.43.233.234
+    addresses: 43.139.163.68
     username: oilbone
-    password: 123123123
-    virtual-host: /test
+    password: oil123123
+    virtual-host: /
     listener:
       simple:
         acknowledge-mode: auto  # 改为自动确认
