@@ -1,12 +1,17 @@
 package com.example.listener;
 
 import jakarta.annotation.Resource;
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
 import org.springframework.amqp.rabbit.annotation.RabbitHandler;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.Context;
 
 import java.util.Map;
 
@@ -15,6 +20,9 @@ import java.util.Map;
 public class MailQueueListener {
     @Resource
     JavaMailSender mailSender;
+
+    @Resource
+    TemplateEngine templateEngine;
 
     @Value("${spring.mail.username}")
     String username;
@@ -41,5 +49,22 @@ public class MailQueueListener {
         message.setTo(email);
         message.setFrom(username);
         return message;
+    }
+
+    private void sendHtmlEmail(String to, String subject, String templateName,
+                              Map<String, Object> variables) throws MessagingException {
+        MimeMessage message = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+
+        // 使用Thymeleaf渲染HTML内容
+        Context context = new Context();
+        context.setVariables(variables);
+        String htmlContent = templateEngine.process(templateName, context);
+
+        helper.setTo(to);
+        helper.setSubject(subject);
+        helper.setText(htmlContent, true);
+
+        mailSender.send(message);
     }
 }
