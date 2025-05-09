@@ -1,6 +1,5 @@
 package com.example.listener;
 
-import com.example.DAO.mapper.AccountMapper;
 import com.example.DAO.service.AccountService;
 import jakarta.annotation.Resource;
 import jakarta.mail.MessagingException;
@@ -8,11 +7,9 @@ import jakarta.mail.internet.MimeMessage;
 import org.springframework.amqp.rabbit.annotation.RabbitHandler;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
@@ -24,13 +21,10 @@ import java.util.Map;
 public class MailQueueListener {
     @Resource
     JavaMailSender mailSender;
-
     @Resource
     TemplateEngine templateEngine;
-
     @Resource
     AccountService accountService;
-
     @Value("${spring.mail.username}")
     String username;
 

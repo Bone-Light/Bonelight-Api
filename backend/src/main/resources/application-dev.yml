@@ -20,6 +20,10 @@ knife4j:
     username: oilbone
     password: 123123
 
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: false  # 关闭驼峰转下划线
+
 spring:
   thymeleaf:
     prefix: classpath:/static/
@@ -61,7 +65,7 @@ spring:
 
   web:
     verify:
-      mailLimit: 60
+      mailLimit: 300
     flow:
       period: 5
       limit: 100
