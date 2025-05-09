@@ -15,8 +15,8 @@ public class Knife4jConfiguration {
     public GroupedOpenApi adminApi() {
         return GroupedOpenApi.builder()
                 .group("admin-api")
-                .pathsToMatch("/admin/**")  // 匹配接口路径
-                .packagesToScan("com.example.admin")  // 扫描包路径
+                .pathsToMatch("/**")  // 匹配接口路径
+                .packagesToScan("com.example.controller")  // 扫描包路径
                 .build();
     }
 

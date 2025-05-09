@@ -3,7 +3,6 @@ package com.example.DAO.entity;
 import java.time.LocalDateTime;
 
 import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
@@ -18,7 +17,7 @@ public class Account {
     @TableId(type = IdType.AUTO)
     Long id;
     //用户名
-    String userName;
+    String username;
     //头像地址
     String userAvatar;
     //邮箱

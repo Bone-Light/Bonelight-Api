@@ -11,6 +11,7 @@ springdoc:
     tags-sorter: alpha  # 标签按字母排序
     operations-sorter: alpha  # 接口按字母排序
 
+# /doc.html
 knife4j:
   enable: true  # 开启增强功能
   setting:
@@ -58,6 +59,9 @@ spring:
     username: root
     password: oil123123
     driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      minimum-idle: 20  # 与maximum-pool-size一致
+      maximum-pool-size: 20
 
   security:
     filter:
