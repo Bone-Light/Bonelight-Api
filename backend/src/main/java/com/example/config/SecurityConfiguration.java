@@ -77,8 +77,9 @@ public class SecurityConfiguration {
         } else if(exceptionOrAuthentication instanceof Authentication authentication){
             User user = (User) authentication.getPrincipal();
             Account account = accountService.findAccountByNameOrEmail(user.getUsername());
+            System.out.println(account);
             LoginVO vo = new LoginVO();
-            BeanUtils.copyProperties(vo,account);
+            BeanUtils.copyProperties(account, vo);
             writer.write(RestBean.success(vo).asJsonString());
         } // 密码校验是隐式的, 实现 BCryptPasswordEncoder 就好
     }

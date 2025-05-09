@@ -65,7 +65,7 @@ spring:
 
   web:
     verify:
-      mailLimit: 300
+      mailLimit: 60
     flow:
       period: 5
       limit: 100

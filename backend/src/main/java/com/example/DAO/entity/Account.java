@@ -16,33 +16,33 @@ import lombok.Data;
 public class Account {
     //Account-ID
     @TableId(type = IdType.AUTO)
-    private Long id;
+    Long id;
     //用户名
-    private String userName;
+    String userName;
     //头像地址
-    private String userAvatar;
+    String userAvatar;
     //邮箱
-    private String email;
+    String email;
     //性别 0-男 1-女
-    private Integer sex;
+    Integer sex;
     //用户角色 user/admin
-    private String userRole;
+    String userRole;
     //密码
-    private String password;
+    String password;
     //accessKey
-    private String accessKey;
+    String accessKey;
     //secretKey
-    private String secretKey;
+    String secretKey;
     //余额
-    private Long money;
+    Long money;
     //邀请码
-    private String invitationCode;
+    String invitationCode;
     //账号状态 0-正常 1-封号
-    private Integer status;
+    Integer status;
     //创建时间
-    private LocalDateTime createTime;
+    LocalDateTime createTime;
     //更新时间
-    private LocalDateTime updateTime;
+    LocalDateTime updateTime;
     //逻辑删除
-    private Integer isDelete;
+    Integer isDelete;
 }

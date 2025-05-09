@@ -61,7 +61,7 @@ public class AccountImpl extends ServiceImpl<AccountMapper, Account>
                     Const.VERIFY_EMAIL_DATA +
                             askCodeDTO.getType() + ":" +
                             askCodeDTO.getEmail(), String.valueOf(code),
-                    60, TimeUnit.SECONDS);
+                    300, TimeUnit.SECONDS);
         }
     }
 
@@ -89,7 +89,7 @@ public class AccountImpl extends ServiceImpl<AccountMapper, Account>
     public void registerByEmail(AccountRegisterDTO accountRegisterDTO) {
         String code = accountRegisterDTO.getCode();
         String email = accountRegisterDTO.getEmail();
-        String name = accountRegisterDTO.getName();
+        String name = accountRegisterDTO.getUsername();
 
         if(code == null) throw new BusinessException(400, "请先获取验证码");
         if(!code.equals(getCodeFromRedis(email, "register"))) throw new BusinessException(400, "验证码错误，请重新输入");
@@ -144,7 +144,7 @@ public class AccountImpl extends ServiceImpl<AccountMapper, Account>
     }
 
     private boolean existAccountByName(String name) {
-        return this.query().eq("userName", name).count() > 0;
+        return this.query().eq("username", name).count() > 0;
     }
 }
 
