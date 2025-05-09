@@ -39,7 +39,7 @@ public class SecurityConfiguration {
         return http
                 .authorizeHttpRequests(conf -> conf
                         .requestMatchers("/api/auth/**", "/error").permitAll()
-                        .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
+                        .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/doc.html", "/webjars/**").permitAll()
                         .anyRequest().hasAnyRole(Const.ROLE_ADMIN, Const.ROLE_NORMAL)
                 )
                 .formLogin(conf -> conf
@@ -77,9 +77,10 @@ public class SecurityConfiguration {
         } else if(exceptionOrAuthentication instanceof Authentication authentication){
             User user = (User) authentication.getPrincipal();
             Account account = accountService.findAccountByNameOrEmail(user.getUsername());
-            System.out.println(account);
             LoginVO vo = new LoginVO();
             BeanUtils.copyProperties(account, vo);
+            System.out.println(account);
+            System.out.println();
             writer.write(RestBean.success(vo).asJsonString());
         } // 密码校验是隐式的, 实现 BCryptPasswordEncoder 就好
     }

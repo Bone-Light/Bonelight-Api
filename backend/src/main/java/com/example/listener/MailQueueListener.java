@@ -38,8 +38,8 @@ public class MailQueueListener {
         switch (type) {
             case "register" -> sendHtmlEmail(email,"您的注册验证码邮件",
                     "code-email",valueMap);
-            case "modify" -> {
-                valueMap.put("username", accountService.getAccountByEmail(email).getUserName());
+            case "reset" -> {
+                valueMap.put("username", accountService.getAccountByEmail(email).getUsername());
                 sendHtmlEmail(email,"您的修改密码邮件",
                 "code-email",valueMap);
             }

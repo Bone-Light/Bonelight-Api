@@ -111,7 +111,7 @@ public class AccountImpl extends ServiceImpl<AccountMapper, Account>
     public void resetPassword(AccountResetPwdDTO accountResetPwdDTO) {
         String code = accountResetPwdDTO.getCode();
         String email = accountResetPwdDTO.getEmail();
-        String password = accountResetPwdDTO.getPassword();
+        String password = bCryptPasswordEncoder.encode(accountResetPwdDTO.getPassword());
 
         if(code == null) throw new BusinessException(400, "请先获取验证码");
         if(!code.equals(getCodeFromRedis(email, "reset"))) throw new BusinessException(400, "验证码错误，请重新输入");
