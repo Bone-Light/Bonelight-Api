@@ -1,0 +1,35 @@
+server:
+  port: 18000
+
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: apiList_route
+          uri: http:localhost:8123
+          predicates:
+            - Path=/api/**
+
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowed-origin-patterns: "*"  # 允许所有来源，或指定域名如 "http://example.com"
+            allowed-methods: # 允许的HTTP方法
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - OPTIONS
+            allowed-headers: "*"          # 允许所有请求头
+            allow-credentials: true       # 允许携带Cookie
+            max-age: 3600                 # 预检请求缓存时间（秒）
+
+dubbo:
+  application:
+    name: dubbo-springboot-demo-provider
+  protocol:
+    name: dubbo
+    port: -1
+  registry:
+    id: nacos-registry
+    address: nacos://localhost:8848
