@@ -33,8 +33,8 @@ import java.util.Objects;
 @Component
 public class GatewayGlobalFilter implements GlobalFilter, Ordered {
     // todo 注册中心， common
-    @DubboReference
-    private DubboUserservice userservice;
+//    @DubboReference
+//    private DubboUserService userService;
 
     private static final List<String> IP_WHITE_LIST = List.of("127.0.0.1");
 
@@ -74,9 +74,9 @@ public class GatewayGlobalFilter implements GlobalFilter, Ordered {
                                      GatewayFilterChain chain,
                                      int param1,
                                      int param2) {
-        // 获取原始响应对象（核心组件，包含响应状态/头信息/响应体等）[3,9](@ref)
+        // 获取原始响应对象（核心组件，包含响应状态/头信息/响应体等）
         ServerHttpResponse originalResponse = exchange.getResponse();
-        // 获取 DataBuffer 工厂，用于创建/包装数据缓冲区（处理二进制流的核心类）[12,13](@ref)
+        // 获取 DataBuffer 工厂，用于创建/包装数据缓冲区（处理二进制流的核心类）
         DataBufferFactory bufferFactory = originalResponse.bufferFactory();
 
         HttpStatusCode status =  originalResponse.getStatusCode();

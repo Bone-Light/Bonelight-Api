@@ -36,14 +36,12 @@ public class ApiFilter implements GatewayFilter, Ordered {
         String sign = headers.getFirst("sign");
         String body = headers.getFirst("body");
 
-        return chain.filter(exchange);
+        return handleResponse(exchange, chain);
     }
 
     // 定义响应式处理方法，返回 Mono<Void> 表示异步无返回值的处理流程
     public Mono<Void> handleResponse(ServerWebExchange exchange,
-                                     GatewayFilterChain chain,
-                                     int param1,
-                                     int param2) {
+                                     GatewayFilterChain chain) {
         // 获取原始响应对象（核心组件，包含响应状态/头信息/响应体等）[3,9](@ref)
         ServerHttpResponse originalResponse = exchange.getResponse();
         // 获取 DataBuffer 工厂，用于创建/包装数据缓冲区（处理二进制流的核心类）[12,13](@ref)
