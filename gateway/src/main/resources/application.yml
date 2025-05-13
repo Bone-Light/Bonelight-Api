@@ -9,7 +9,6 @@ spring:
           uri: http:localhost:8123
           predicates:
             - Path=/api/**
-
       globalcors:
         cors-configurations:
           '[/**]':
@@ -29,7 +28,7 @@ dubbo:
     name: dubbo-springboot-demo-provider
   protocol:
     name: dubbo
-    port: -1
+    port: 20881
   registry:
     id: nacos-registry
     address: nacos://localhost:8848
