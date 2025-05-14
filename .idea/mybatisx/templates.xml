@@ -70,12 +70,8 @@
             <option name="tableUIInfoList">
               <list>
                 <TableUIInfo>
-                  <option name="className" value="Account" />
-                  <option name="tableName" value="account" />
-                </TableUIInfo>
-                <TableUIInfo>
-                  <option name="className" value="ApiList" />
-                  <option name="tableName" value="api_list" />
+                  <option name="className" value="ApiInfo" />
+                  <option name="tableName" value="api_info" />
                 </TableUIInfo>
               </list>
             </option>
