@@ -3,9 +3,10 @@ package com.example.config;
 import com.example.DAO.entity.Account;
 import com.example.DAO.service.AccountService;
 import com.example.DAO.vo.LoginVO;
-import com.example.Filter.RequestLogFilter;
 import com.example.common.RestBean;
 import com.example.constant.Const;
+import com.example.filter.GatewayHeaderFilter;
+import com.example.filter.RequestLogFilter;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -18,7 +19,6 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
@@ -29,6 +29,9 @@ import java.io.PrintWriter;
 public class SecurityConfiguration {
     @Resource
     RequestLogFilter requestLogFilter;
+
+    @Resource
+    GatewayHeaderFilter gatewayHeaderFilter;
 
     @Resource
     AccountService accountService;
@@ -60,7 +63,9 @@ public class SecurityConfiguration {
                 .sessionManagement(conf -> conf
                         .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED) // 按需创建
                         .maximumSessions(1) // 最大会话数
+                        .maxSessionsPreventsLogin(true)
                 ) // session 逻辑
+                .addFilterBefore(gatewayHeaderFilter, RequestLogFilter.class)
                 .addFilterBefore(requestLogFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
@@ -79,8 +84,6 @@ public class SecurityConfiguration {
             Account account = accountService.findAccountByNameOrEmail(user.getUsername());
             LoginVO vo = new LoginVO();
             BeanUtils.copyProperties(account, vo);
-            System.out.println(account);
-            System.out.println();
             writer.write(RestBean.success(vo).asJsonString());
         } // 密码校验是隐式的, 实现 BCryptPasswordEncoder 就好
     }

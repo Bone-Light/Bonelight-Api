@@ -1,4 +1,4 @@
-package com.example.Filter;
+package com.example.filter;
 
 import com.example.common.RestBean;
 import com.example.utils.FlowUtil;
