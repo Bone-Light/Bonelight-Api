@@ -15,6 +15,7 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -43,7 +44,7 @@ public class AccountImpl extends ServiceImpl<AccountMapper, Account>
     private FlowUtil flowUtil;
     @Resource
     private BCryptPasswordEncoder bCryptPasswordEncoder;
-
+    /*获取验证码*/
     @Override
     public void getCode(AskCodeDTO askCodeDTO, String ip) {
         ip = ip.replace(':','-');
@@ -64,14 +65,14 @@ public class AccountImpl extends ServiceImpl<AccountMapper, Account>
                     300, TimeUnit.SECONDS);
         }
     }
-
+    /*获取用户 - by email/name */
     @Override
     public Account findAccountByNameOrEmail(String username) {
         return this.query()
                 .eq("username", username) .or() .eq("email", username)
                 .one();
     }
-
+    /*重写 security 验证用户*/
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Account account = this.findAccountByNameOrEmail(username);
@@ -84,7 +85,7 @@ public class AccountImpl extends ServiceImpl<AccountMapper, Account>
                 .roles(account.getUserRole())
                 .build();
     }
-
+    /*邮箱注册*/
     @Override
     public void registerByEmail(AccountRegisterDTO accountRegisterDTO) {
         String code = accountRegisterDTO.getCode();
@@ -106,7 +107,7 @@ public class AccountImpl extends ServiceImpl<AccountMapper, Account>
         account.setUpdateTime(LocalDateTime.now());
         this.save(account);
     }
-
+    /*重置密码*/
     @Override
     public void resetPassword(AccountResetPwdDTO accountResetPwdDTO) {
         String code = accountResetPwdDTO.getCode();
@@ -123,11 +124,63 @@ public class AccountImpl extends ServiceImpl<AccountMapper, Account>
                 .eq("email", email)
                 .update();
     }
-
+    /*获取用户 - by email */
     @Override
     public Account getAccountByEmail(String email) {
         return this.query().eq("email", email).one();
     }
+    /*todo 用户注销 - 自己*/
+    @Override
+    public void deleteAccountBySelf(){
+
+    }
+
+    /*todo 用户注销 - 管理*/
+    @Override
+    @PreAuthorize("hasRole='Admin'")
+    public void deleteAccountByAdmin(){
+
+    }
+
+    /*todo 添加用户 - 管理*/
+    @Override
+    @PreAuthorize("hasRole='Admin'")
+    public void createAccountByAdmin(){
+
+    }
+
+    /*todo 封禁用户 - 管理*/
+    @Override
+    @PreAuthorize("hasRole='Admin'")
+    public void banAccountByAdmin(){
+
+    }
+
+    /*todo 解封用户 - 管理*/
+    @Override
+    @PreAuthorize("hasRole('Admin')")
+    public void unLockAccountListPage(){
+
+    }
+
+    /*todo 更新用户信息*/
+    @Override
+    public void updateAccountInfo(){
+
+    }
+
+    /*todo 获取用户列表*/
+    @Override
+    public void getAccountList(){
+
+    }
+
+    /*todo 获取用户列表页*/
+    @Override
+    public void getAccountListPage(){
+
+    }
+
 
     private boolean keyBusy(String key) {
         key = Const.VERIFY_EMAIL_LIMIT + key;
