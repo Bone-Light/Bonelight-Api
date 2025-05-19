@@ -8,6 +8,8 @@ import com.example.DAO.service.ApiInfoService;
 import com.example.DAO.mapper.ApiInfoMapper;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+
 /**
 * @author 吾骨封灯
 * @since 2025-05-14 09:48:41
@@ -23,8 +25,8 @@ public class ApiInfoImpl extends ServiceImpl<ApiInfoMapper, ApiInfo>
         entity.setUserId(invokeDTO.getUserId());
         entity.setApiId(invokeDTO.getApiId());
         entity.setTotInvoke(0L); // 初始调用次数为0
-        entity.setCreateTime();
-        entity.setCreateTime();
+        entity.setCreateTime(LocalDateTime.now());
+        entity.setUpdateTime(LocalDateTime.now());
 
         // 构建UpdateWrapper设置更新逻辑和条件
         UpdateWrapper<ApiInfo> wrapper = new UpdateWrapper<>();

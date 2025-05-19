@@ -1,25 +1,15 @@
-package com.example.DAO.entity;
+package com.example.DAO.vo.ApiListVOs;
 
+import lombok.Data;
 
 import java.time.LocalDateTime;
 
-import com.baomidou.mybatisplus.annotation.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Data;
 @Data
-@TableName("api_list")
-@AllArgsConstructor
-@NoArgsConstructor
-public class ApiList {
+public class GetApiInfoVO {
     //API-ID
-    @TableId(type = IdType.AUTO)
     Integer id;
     //接口名
     String apiName;
-    //接口地址
-    String url;
     //接口头像
     String avatar;
     //创建用户ID
@@ -48,7 +38,4 @@ public class ApiList {
     LocalDateTime createTime;
     //更新时间
     LocalDateTime updateTime;
-    @TableLogic
-    //逻辑删除
-    Integer isDelete;
 }

@@ -1,9 +1,10 @@
 package com.example.DAO.service.impl;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.example.DAO.dto.AccountDTOs.AccountRegisterDTO;
-import com.example.DAO.dto.AccountDTOs.AccountResetPwdDTO;
-import com.example.DAO.dto.AccountDTOs.AskCodeDTO;
+import com.example.DAO.dto.AccountDTOs.*;
+import com.example.DAO.dto.PageDTO;
 import com.example.DAO.entity.Account;
 import com.example.DAO.service.AccountService;
 import com.example.DAO.mapper.AccountMapper;
@@ -23,6 +24,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
@@ -90,22 +92,11 @@ public class AccountImpl extends ServiceImpl<AccountMapper, Account>
     public void registerByEmail(AccountRegisterDTO accountRegisterDTO) {
         String code = accountRegisterDTO.getCode();
         String email = accountRegisterDTO.getEmail();
-        String name = accountRegisterDTO.getUsername();
-
         if(code == null) throw new BusinessException(400, "请先获取验证码");
         if(!code.equals(getCodeFromRedis(email, "register"))) throw new BusinessException(400, "验证码错误，请重新输入");
-        if(existAccountByEmail(email)) throw new BusinessException(400, "该邮箱已经被注册");
-        if(existAccountByName(name)) throw new BusinessException(400, "该用户名已经使用");
         stringRedisTemplate.delete(Const.VERIFY_EMAIL_DATA + "register:" + email);
 
-        Account account = new Account();
-        BeanUtils.copyProperties(accountRegisterDTO, account);
-        account.setPassword(bCryptPasswordEncoder.encode(accountRegisterDTO.getPassword()));
-        account.setAccessKey(bCryptPasswordEncoder.encode(name));
-        account.setSecretKey(bCryptPasswordEncoder.encode(email));
-        account.setCreateTime(LocalDateTime.now());
-        account.setUpdateTime(LocalDateTime.now());
-        this.save(account);
+        this.save(setAccount(accountRegisterDTO));
     }
     /*重置密码*/
     @Override
@@ -129,58 +120,80 @@ public class AccountImpl extends ServiceImpl<AccountMapper, Account>
     public Account getAccountByEmail(String email) {
         return this.query().eq("email", email).one();
     }
-    /*todo 用户注销 - 自己*/
-    @Override
-    public void deleteAccountBySelf(){
 
+    /** 用户注销 - 自己*/
+    @Override
+    public void deleteAccountBySelf(DeleteAccountBySelfDTO deleteAccountBySelfDTO){
+        String code = deleteAccountBySelfDTO.getCode();
+        String email = deleteAccountBySelfDTO.getEmail();
+        if(code == null) throw new BusinessException(400, "请先获取验证码");
+        if(!code.equals(getCodeFromRedis(email, "delete"))) throw new BusinessException(400, "验证码错误，请重新输入");
+        stringRedisTemplate.delete(Const.VERIFY_EMAIL_DATA + "delete:" + email);
+        this.remove(this.query().eq("email", email));
     }
 
-    /*todo 用户注销 - 管理*/
-    @Override
+    /** 用户注销 - 管理*/
     @PreAuthorize("hasRole='Admin'")
-    public void deleteAccountByAdmin(){
-
+    @Override
+    public void deleteAccountByAdmin(DeleteAccountByAdminDTO deleteAccountByAdminDTO){
+        Long id = deleteAccountByAdminDTO.getId();
+        this.remove(this.query().eq("id", id));
     }
 
-    /*todo 添加用户 - 管理*/
-    @Override
+    /** 添加用户 - 管理*/
     @PreAuthorize("hasRole='Admin'")
-    public void createAccountByAdmin(){
-
+    @Override
+    public void createAccountByAdmin(CreateAccountByAdminDTO createAccountByAdminDTO){
+        this.save(setAccount(createAccountByAdminDTO));
     }
 
-    /*todo 封禁用户 - 管理*/
-    @Override
+    /** 封禁用户 - 管理*/
     @PreAuthorize("hasRole='Admin'")
-    public void banAccountByAdmin(){
-
+    @Override
+    public void banAccountByAdmin(BanAccountByAdminDTO banAccountByAdminDTO){
+        Long id = banAccountByAdminDTO.getId();
+        this.update().eq("id", id).set("status", 1).update();
     }
 
-    /*todo 解封用户 - 管理*/
-    @Override
+    /** 解封用户 - 管理*/
     @PreAuthorize("hasRole('Admin')")
-    public void unLockAccountListPage(){
-
-    }
-
-    /*todo 更新用户信息*/
     @Override
-    public void updateAccountInfo(){
-
+    public void unLockAccountListPage(UnLockAccountListPageDTO unLockAccountListPageDTO){
+        Long id = unLockAccountListPageDTO.getId();
+        this.update().eq("id", id).set("status", 0).update();
     }
 
-    /*todo 获取用户列表*/
+    /** 更新用户信息*/
     @Override
-    public void getAccountList(){
+    public void updateAccountInfo(UpdateAccountInfoDTO updateAccountInfoDTO){
+        Long id = updateAccountInfoDTO.getId();
+        if(this.query().eq("id", id).count() == 0)  throw new BusinessException(401, "用户不存在");
 
+        Account account = new Account();
+        BeanUtils.copyProperties(updateAccountInfoDTO, account);
+        account.setUpdateTime(LocalDateTime.now());
+        this.updateById(account);
     }
 
-    /*todo 获取用户列表页*/
+    /** 获取用户列表*/
+    @PreAuthorize("hasRole('Admin')")
     @Override
-    public void getAccountListPage(){
-
+    public List<Account> getAccountList(){
+        return this.list();
     }
 
+    /** 获取用户列表页*/
+    @Override
+    public IPage<Account> getAccountListPage(PageDTO pageDTO){
+        Page<Account> page = new Page<>(pageDTO.getCurrentPage(), pageDTO.getSize());
+        return this.query().page(page);
+    }
+
+    /*todo 用户 Key 更新*/
+    @Override
+    public void updateAccountKey(){
+
+    }
 
     private boolean keyBusy(String key) {
         key = Const.VERIFY_EMAIL_LIMIT + key;
@@ -190,6 +203,22 @@ public class AccountImpl extends ServiceImpl<AccountMapper, Account>
     private String getCodeFromRedis(String email, String type) {
         String key = Const.VERIFY_EMAIL_DATA + type + ":" + email;
         return stringRedisTemplate.opsForValue().get(key);
+    }
+
+    private Account setAccount(Object obj) {
+        Account account = new Account();
+        BeanUtils.copyProperties(obj, account);
+        String email = account.getEmail();
+        String name = account.getUsername();
+        if(existAccountByEmail(email)) throw new BusinessException(400, "该邮箱已经被注册");
+        if(existAccountByName(name)) throw new BusinessException(400, "该用户名已经使用");
+        String password = account.getPassword();
+        account.setPassword(bCryptPasswordEncoder.encode(password));
+        account.setAccessKey(bCryptPasswordEncoder.encode(name));
+        account.setSecretKey(bCryptPasswordEncoder.encode(email));
+        account.setCreateTime(LocalDateTime.now());
+        account.setUpdateTime(LocalDateTime.now());
+        return account;
     }
 
     private boolean existAccountByEmail(String email) {

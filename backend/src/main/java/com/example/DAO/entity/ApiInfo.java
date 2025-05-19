@@ -3,10 +3,7 @@ package com.example.DAO.entity;
 
 import java.time.LocalDateTime;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.Data;
@@ -37,6 +34,6 @@ public class ApiInfo {
     @TableField("updateTime")
     private LocalDateTime updateTime;
     //逻辑删除
-    @TableField("isDelete")
+    @TableLogic
     private Integer isDelete;
 }

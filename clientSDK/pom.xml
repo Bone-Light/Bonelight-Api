@@ -9,7 +9,6 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <groupId>org.example</groupId>
     <artifactId>clientSDK</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>clientSDK</name>
