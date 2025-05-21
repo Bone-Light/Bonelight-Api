@@ -96,4 +96,11 @@ public class AccountController {
     public RestBean<IPage<Account>> getAccountListPage(PageDTO pageDTO){
         return RestBean.success(accountService.getAccountListPage(pageDTO));
     }
+
+    /** 用户 Key 更新*/
+    @PostMapping("updateAccountKey")
+    public RestBean<Void> updateAccountKey(UpdateAccountKeyDTO updateAccountKeyDTO){
+        this.accountService.updateAccountKey(updateAccountKeyDTO);
+        return RestBean.success();
+    }
 }

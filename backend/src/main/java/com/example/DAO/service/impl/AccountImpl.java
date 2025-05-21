@@ -11,6 +11,7 @@ import com.example.DAO.mapper.AccountMapper;
 import com.example.constant.Const;
 import com.example.exception.BusinessException;
 import com.example.utils.FlowUtil;
+import com.example.utils.KeyUtil;
 import jakarta.annotation.Resource;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.BeanUtils;
@@ -46,6 +47,9 @@ public class AccountImpl extends ServiceImpl<AccountMapper, Account>
     private FlowUtil flowUtil;
     @Resource
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+    @Resource
+    private KeyUtil keyUtil;
+
     /*获取验证码*/
     @Override
     public void getCode(AskCodeDTO askCodeDTO, String ip) {
@@ -189,10 +193,12 @@ public class AccountImpl extends ServiceImpl<AccountMapper, Account>
         return this.query().page(page);
     }
 
-    /*todo 用户 Key 更新*/
+    /** 用户 Key 更新*/
     @Override
-    public void updateAccountKey(){
-
+    public void updateAccountKey(UpdateAccountKeyDTO updateAccountKeyDTO){
+        String ak = keyUtil.generateAK(updateAccountKeyDTO.getEmail());
+        String sk = keyUtil.generateSK(ak);
+        this.update().eq("id", updateAccountKeyDTO.getId()).set("accessKey", ak).set("secretKey", sk).update();
     }
 
     private boolean keyBusy(String key) {
@@ -213,9 +219,12 @@ public class AccountImpl extends ServiceImpl<AccountMapper, Account>
         if(existAccountByEmail(email)) throw new BusinessException(400, "该邮箱已经被注册");
         if(existAccountByName(name)) throw new BusinessException(400, "该用户名已经使用");
         String password = account.getPassword();
+
+        String ak = keyUtil.generateAK(email);
+        String sk = keyUtil.generateSK(ak);
         account.setPassword(bCryptPasswordEncoder.encode(password));
-        account.setAccessKey(bCryptPasswordEncoder.encode(name));
-        account.setSecretKey(bCryptPasswordEncoder.encode(email));
+        account.setAccessKey(ak);
+        account.setSecretKey(sk);
         account.setCreateTime(LocalDateTime.now());
         account.setUpdateTime(LocalDateTime.now());
         return account;
@@ -228,6 +237,8 @@ public class AccountImpl extends ServiceImpl<AccountMapper, Account>
     private boolean existAccountByName(String name) {
         return this.query().eq("username", name).count() > 0;
     }
+
+
 }
 
 

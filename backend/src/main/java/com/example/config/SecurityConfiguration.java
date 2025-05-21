@@ -65,8 +65,8 @@ public class SecurityConfiguration {
                         .maximumSessions(1) // 最大会话数
                         .maxSessionsPreventsLogin(true)
                 ) // session 逻辑
-                .addFilterBefore(gatewayHeaderFilter, RequestLogFilter.class)
                 .addFilterBefore(requestLogFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(gatewayHeaderFilter, RequestLogFilter.class)
                 .build();
     }
 

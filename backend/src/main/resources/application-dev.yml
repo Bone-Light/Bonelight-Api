@@ -1,4 +1,5 @@
 # 开发环境配置
+
 server:
   port: 8081
 
@@ -26,7 +27,8 @@ mybatis-plus:
     map-underscore-to-camel-case: false  # 关闭驼峰转下划线
 
 spring:
-
+  application:
+    name: light-api-backend
   thymeleaf:
     prefix: classpath:/static/
     suffix: .html
@@ -87,6 +89,25 @@ spring:
       database: 0
       password: oil123123
 
+  config:
+    import: "nacos:light-api-backend.yaml"  # ✅ 正确导入配置
+  cloud:
+    nacos:
+      discovery:
+        enabled: true  # 显式开启服务注册
+        server-addr: 43.139.163.68:8848  # 必须与截图中的地址一致
+        username: nacos                   # 配置中心鉴权（与服务端一致）
+        password: oil123123
+        namespace: public                 # 命名空间需匹配
+        group: DEFAULT_GROUP              # 默认组
+      config:
+        enabled: true
+        server-addr: 43.139.163.68:8848  # ✅ 注意短横线（原server—addr长横线错误）
+        username: nacos                   # 配置中心鉴权（与服务端一致）
+        password: oil123123
+        namespace: public                 # ✅ 命名空间需在Nacos控制台存在
+        group: DEFAULT_GROUP              # ✅ 分组名需无特殊字符（原DEFAULT_Group_ID européen非法）
+        file-extension: yaml
 
 dubbo:
   application:
@@ -96,3 +117,7 @@ dubbo:
     port: 20880  # 服务端口（若设置为 -1，则自动分配端口）
   registry:
     address: nacos://43.139.163.68:8848  # Nacos 地址
+    parameters:
+      namespace: public
+      username: nacos
+      password: oil123123

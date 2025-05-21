@@ -51,6 +51,6 @@ public interface AccountService extends IService<Account>, UserDetailsService {
     /** 获取用户列表页*/
     IPage<Account> getAccountListPage(PageDTO pageDTO);
 
-    /*todo 更改用户 Key 页 ?权限不明? */
-    void updateAccountKey();
+    /** 用户 Key 更新*/
+    void updateAccountKey(UpdateAccountKeyDTO updateAccountKeyDTO);
 }

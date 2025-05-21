@@ -36,17 +36,36 @@
         <jwt.version>4.3.0</jwt.version>
         <knife4j.version>4.5.0</knife4j.version>
         <dubbo.version>3.3.4</dubbo.version>
-        <nacos-client.version>3.0.0</nacos-client.version>
+        <nacos-client.version>2.5.1</nacos-client.version>
         <spring-cloud-gateway.version>4.0.0</spring-cloud-gateway.version>
+        <spring-cloud-starter-alibaba-nacos-config.version>2023.0.1.2</spring-cloud-starter-alibaba-nacos-config.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
-            <!-- 继承 Spring Boot 官方依赖版本 -->
+            <!-- 继承 Spring Boot 官方依赖版本 BOM -->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
                 <version>${spring-boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <!-- Spring Cloud BOM -->
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>2023.0.3</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <!-- Spring Cloud Alibaba BOM -->
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+                <version>2023.0.1.2</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -104,16 +123,22 @@
                 <artifactId>dubbo-spring-boot-starter</artifactId>
                 <version>${dubbo.version}</version>
             </dependency>
-            <dependency>
-                <groupId>com.alibaba.nacos</groupId>
-                <artifactId>nacos-client</artifactId>
-                <version>${nacos-client.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-starter-gateway</artifactId>
-                <version>${spring-cloud-gateway.version}</version>
-            </dependency>
+<!--            <dependency>-->
+<!--                <groupId>com.alibaba.nacos</groupId>-->
+<!--                <artifactId>nacos-client</artifactId>-->
+<!--                <version>${nacos-client.version}</version>-->
+<!--            </dependency>-->
+
+<!--            <dependency>-->
+<!--                <groupId>org.springframework.cloud</groupId>-->
+<!--                <artifactId>spring-cloud-starter-gateway</artifactId>-->
+<!--                <version>${spring-cloud-gateway.version}</version>-->
+<!--            </dependency>-->
+<!--            <dependency>-->
+<!--                <groupId>com.alibaba.cloud</groupId>-->
+<!--                <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>-->
+<!--                <version>${spring-cloud-starter-alibaba-nacos-config.version}</version>-->
+<!--            </dependency>-->
         </dependencies>
     </dependencyManagement>
 
