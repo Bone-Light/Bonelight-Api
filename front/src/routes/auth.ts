@@ -3,7 +3,7 @@ import {lazy} from "react";
 const authChildren = [
     {
         path: "login",
-        Component: lazy(()=>import("@/features/auth/pages/login"))
+        Component: lazy(()=>import("@/features/auth/pages/Login.tsx"))
         // Component: login
     },
     {
