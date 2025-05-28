@@ -14,7 +14,7 @@ export const useUser = () => {
     // useAppSelector 用于从 Redux Store 中读取数据
     const auth = useAppSelector((state:RootState) => state.auth);
 
-    return { // 这里暴露 模块状态
-        auth,
+    return { // 这里暴露 模块状态， 也可以暴露函数 xxx: dispatch(yyy());
+        auth
     };
 };

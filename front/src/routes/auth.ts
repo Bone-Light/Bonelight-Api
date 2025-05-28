@@ -12,7 +12,7 @@ const authChildren = [
     },
     {
         path:"register",
-        Component: lazy(()=>import("@/features/auth/pages/register"))
+        Component: lazy(()=>import("@/features/auth/pages/Register.tsx"))
     }
 ]
 
