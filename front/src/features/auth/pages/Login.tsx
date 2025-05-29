@@ -1,9 +1,9 @@
 // src/pages/Login.tsx
 import React from 'react';
-import { Form, Input, Button, Checkbox, Card, Typography, Alert } from 'antd';
+import {Form, Input, Button, Checkbox, Card, Typography, Alert, Col, Row} from 'antd';
 
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
-import { useNavigate } from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import {useAppDispatch, useUser} from '@/store/hooks';
 import { loginUser } from '@/store/slice/authSlice';
 
@@ -92,17 +92,32 @@ function Login(){
                     </Form.Item>
 
                     <Form.Item>
-                        <Button
-                            type="primary"
-                            htmlType="submit"
-                            loading={auth.loading}
-                            block
-                            size="large"
-                        >
-                            登录
-                        </Button>
+                        <Row gutter={[16, 16]}>
+                            <Col span={12}>
+                                <Button
+                                    type="primary"
+                                    htmlType="submit"
+                                    loading={auth.loading}
+                                    block
+                                    size="large"
+                                >
+                                    登录
+                                </Button>
+                            </Col>
+                            <Col span={12}>
+                                <Button
+                                    type="default"
+                                    block
+                                    size="large"
+                                    onClick={()=>navigate('/auth/forget')}
+                                >
+                                    忘记密码
+                                </Button>
+                            </Col>
+                        </Row>
                     </Form.Item>
                 </Form>
+                <Link to={'/auth/register'} style={{fontSize:"smaller"}}>没有账号, 立即注册</Link>
             </Card>
         </div>
     );

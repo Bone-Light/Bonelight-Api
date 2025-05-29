@@ -23,6 +23,13 @@ export default tseslint.config(
         'warn',
         { allowConstantExport: true },
       ],
+      "@typescript-eslint/no-unused-vars": [
+          "error",
+          {
+              varsIgnorePattern: "^_", // 忽略变量名以下划线开头的变量
+              argsIgnorePattern: "^_"  // 忽略函数参数以下划线开头的参数
+          }
+      ]
     },
   },
 )
