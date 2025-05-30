@@ -8,7 +8,7 @@ const authChildren = [
     },
     {
         path:"forget",
-        Component: lazy(()=>import("@/features/auth/pages/forget"))
+        Component: lazy(()=>import("@/features/auth/pages/Forget.tsx"))
     },
     {
         path:"register",
