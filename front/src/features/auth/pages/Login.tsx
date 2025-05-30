@@ -1,5 +1,4 @@
 // src/pages/Login.tsx
-import React from 'react';
 import {Form, Input, Button, Checkbox, Card, Typography, Alert, Col, Row} from 'antd';
 
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
@@ -12,7 +11,7 @@ const { Title } = Typography;
 function Login(){
     const { auth } = useUser();
     const navigate = useNavigate();
-    const dispatch = useAppDispatch();
+    // const dispatch = useAppDispatch();
 
     // 如果已登录则跳转
     // React.useEffect(() => {

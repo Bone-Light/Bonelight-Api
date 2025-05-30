@@ -32,10 +32,9 @@ function Register() {
         }
     });
 
-
     return(
         <>
-            <Card style={{width: "600px", height: "400px", margin: "auto"}}>
+            <Card style={{width: "600px", height: "400px", margin: "auto", boxShadow: 'inset 0 1px 6px rgba(0,0,0,0.23)' }}>
                 <h2 style={{margin: 0, padding: 0}}>加入我们</h2>
                 <Link to={'/auth/login'} style={{fontSize:"smaller"}}>已有账号, 立即登录</Link>
                 <Divider/>

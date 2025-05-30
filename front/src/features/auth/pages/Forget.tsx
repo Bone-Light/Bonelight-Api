@@ -55,11 +55,8 @@ function Forget(){
                         <Button htmlType={'submit'} style={{width: '80%'}}>重置密码</Button>
                     </Form.Item>
                 </Form>
+                <Link to={'/auth/login'} style={{fontSize:"smaller"}}>已有账号, 立即登录</Link>
             </Card>
-
-
-            <Link to={'/auth/login'} style={{fontSize:"smaller"}}>已有账号, 立即登录</Link>
-
         </>
     )
 }
