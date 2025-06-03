@@ -16,7 +16,7 @@ function Forget(){
 
     return (
         <>
-            <Card style={{ width: '400px', height: '400px', boxShadow: 'inset 0 1px 6px rgba(0,0,0,0.23)' }}>
+            <Card style={{width: "600px", height: "440px", margin: "auto", boxShadow: 'inset 0 1px 6px rgba(0,0,0,0.23)' }}>
                 <h2>忘记密码</h2>
                 <Divider/>
                 <Form
@@ -51,11 +51,11 @@ function Forget(){
                         </Row>
                     </Form.Item>
 
-                    <Form.Item label={null}>
-                        <Button htmlType={'submit'} style={{width: '80%'}}>重置密码</Button>
-                    </Form.Item>
+                    <Button htmlType={'submit'} style={{width: '80%'}}>重置密码</Button>
                 </Form>
-                <Link to={'/auth/login'} style={{fontSize:"smaller"}}>已有账号, 立即登录</Link>
+                <div style={{margin: '20px', display:'flex', justifyContent:'center'}}>
+                    <Link to={'/auth/login'} style={{fontSize:"smaller"}}>已有账号, 立即登录</Link>
+                </div>
             </Card>
         </>
     )

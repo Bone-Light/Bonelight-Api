@@ -11,7 +11,6 @@ function Register() {
     const register = ()=>{
         setLoading(true);
         TimePlay.addTask(load,500,1);
-
     }
 
     const [cd,setCd] = useState(0)

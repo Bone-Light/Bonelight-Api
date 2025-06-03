@@ -1,17 +1,18 @@
 import {createBrowserRouter} from "react-router-dom";
 import auth from "@/features/auth/pages/auth.tsx";
 import authChildren from "@/routes/auth.ts";
-import home from "@/features/home/pages/home.tsx";
+import Home from "@/features/home/pages/Home.tsx";
+
 const router = createBrowserRouter([
     {
       path:"",
-      Component: home,
+      Component: Home,
     },
     {
         path: "/auth",
         Component: auth,
         children: authChildren
-    }
+    },
 ])
 
 export default router;

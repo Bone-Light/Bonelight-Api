@@ -1,12 +1,9 @@
 // src/pages/Login.tsx
-import {Form, Input, Button, Checkbox, Card, Typography, Alert, Col, Row} from 'antd';
+import {Form, Input, Button, Checkbox, Card, Alert, Col, Row} from 'antd';
 
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import {Link, useNavigate} from 'react-router-dom';
-import {useAppDispatch, useUser} from '@/store/hooks';
-import { loginUser } from '@/store/slice/authSlice';
-
-const { Title } = Typography;
+import {useUser} from '@/store/hooks';
 
 function Login(){
     const { auth } = useUser();
@@ -36,17 +33,9 @@ function Login(){
     };
 
     return (
-        <div style={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            minHeight: '100vh',
-            background: '#f0f2f5'
-        }}>
-            <Card style={{ width: 400, boxShadow: '0 4px 12px rgba(0,0,0,0.15)' }}>
-                <div style={{ textAlign: 'center', marginBottom: 24 }}>
-                    <Title level={2}>系统登录</Title>
-                </div>
+        <div>
+            <Card style={{width: "600px", height: "440px", margin: "auto", boxShadow: 'inset 0 1px 6px rgba(0,0,0,0.23)' }}>
+                <h2>系统登录</h2>
 
                 {auth.error && (
                     <Alert

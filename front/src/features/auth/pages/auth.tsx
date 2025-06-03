@@ -1,9 +1,11 @@
 import {Outlet} from "react-router-dom";
 
+
 function auth() {
     return (
         <div>
-            <Outlet/>
+            <div>Auth</div>
+            <Outlet />
         </div>
     )
 }
