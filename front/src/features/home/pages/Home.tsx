@@ -7,7 +7,6 @@ const { Header, Footer} = Layout;
 function Home(){
     const navigate = useNavigate();
     const { pathname } = useLocation();
-
     const {
         token: { colorBgContainer, borderRadiusLG },
     } = theme.useToken();
