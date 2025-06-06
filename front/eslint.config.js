@@ -27,9 +27,12 @@ export default tseslint.config(
           "error",
           {
               varsIgnorePattern: "^_", // 忽略变量名以下划线开头的变量
-              argsIgnorePattern: "^_"  // 忽略函数参数以下划线开头的参数
+              argsIgnorePattern: "^_",  // 忽略函数参数以下划线开头的参数
+              functionIgnorePattern: "^_", // 忽略下划线开头的函数
           }
-      ]
+      ],
+      // "@typescript-eslint/no-unused-vars": false,
+      "@typescript-eslint/no-explicit-any": "off", // 关闭 any 类型检查
     },
   },
 )

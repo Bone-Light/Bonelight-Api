@@ -2,6 +2,7 @@ import Sider from "antd/es/layout/Sider";
 import {Layout, Menu, theme} from "antd";
 import {Content} from "antd/es/layout/layout";
 import {Outlet, useNavigate,} from "react-router-dom";
+import Man from "@/features/home/components/man.tsx";
 
 function Nav1() {
   const navigate = useNavigate();
@@ -26,7 +27,7 @@ function Nav1() {
         />
       </Sider>
       <Content style={{ padding: '0 24px', minHeight: 280 }}>
-        Content
+        <Man/>
         <Outlet/>
       </Content>
     </Layout>

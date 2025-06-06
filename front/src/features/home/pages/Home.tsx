@@ -41,6 +41,8 @@ function Home(){
                     selectedKeys={[pathname]} // 这是动态路由
                     items={navs}
                     style={{ flex: 1, minWidth: 0 }}
+                    multiple={true}
+                    onDeselect={({key})=> console.log(key)}
                 />
             </Header>
             <div style={{ padding: '0 48px' }}>
