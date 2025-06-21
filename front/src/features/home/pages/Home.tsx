@@ -18,7 +18,7 @@ function Home(){
               label: 'Home',
               onClick: ()=>{navigate('/')},
             },
-            ...['A', 'B', 'C'].map((key) => ({
+            ...['A', 'ApiGround', 'C'].map((key) => ({
               key: '/'+key,
               label: `nav ${key}`,
               onClick: () => {navigate(key)},

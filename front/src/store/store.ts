@@ -1,9 +1,11 @@
 // store.js (JavaScript 版)
 import { configureStore } from '@reduxjs/toolkit';
 import authSlice from "@/store/slice/authSlice.ts";
+import apiListSlice from "@/store/slice/apiListSlice.ts";
 export const store = configureStore({
     reducer: {
         auth: authSlice,
+        apiList: apiListSlice
     },
     // 内置默认中间件已包含 redux-thunk 和 immutableCheck
     middleware: (getDefaultMiddleware) =>

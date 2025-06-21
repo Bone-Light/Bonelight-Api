@@ -11,6 +11,10 @@ import Forget from "@/features/auth/pages/Forget.tsx";
 import User from "@/features/auth/pages/User.tsx";
 import Nav1 from "@/features/home/components/homeContext/Nav1.tsx";
 import Setting from "@/features/setting/pages/Setting.tsx";
+import HomeIndex from "@/features/home/components/homeContext/HomeIndex.tsx";
+import ApiGround from "@/features/home/components/homeContext/ApiGround.tsx";
+import UseApi from "@/features/home/components/homeContext/UseApi.tsx";
+import UseApiObj from "@/features/home/components/homeContext/UseApiObj.tsx";
 
 function App() {
   const { auth } = useUser()
@@ -36,9 +40,19 @@ function App() {
           </Route>
 
           <Route path="/" element={<Home/>}>
+            <Route index element={<HomeIndex/>}/>
+
             <Route path="A" element={<Nav1/>}>
               <Route path=":userId" element={<User/>}/>
             </Route>
+
+            <Route path="ApiGround">
+              <Route index element={<ApiGround/>}/>
+              <Route path='UseApi' element={<UseApi/>}>
+                <Route path=':apiId' element={<UseApiObj/>}/>
+              </Route>
+            </Route>
+
 
             <Route path="Setting" element={<Setting/>}>
               <Route path=":userId" element={<User/>}/>
